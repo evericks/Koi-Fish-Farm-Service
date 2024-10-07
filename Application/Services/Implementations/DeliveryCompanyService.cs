@@ -5,6 +5,7 @@ using Data.EntityRepositories.Interfaces;
 using Data.UnitOfWorks.Interfaces;
 using Domain.Entities;
 using Domain.Models.Creates;
+using Domain.Models.Update;
 using Domain.Models.Views;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,14 @@ public class DeliveryCompanyService: BaseService, IDeliveryCompanyService
     {
         var deliveryCompany = _mapper.Map<DeliveryCompany>(model);
         _deliveryCompanyRepository.Add(deliveryCompany);
+        var result = await _unitOfWork.SaveChangesAsync();
+        return result > 0 ? await GetDeliveryCompany(deliveryCompany.Id) : new BadRequestResult();
+    }
+    
+    public async Task<IActionResult> UpdateDeliveryCompany(Guid id, DeliveryCompanyUpdateModel model)
+    {
+        var deliveryCompany = _mapper.Map<DeliveryCompany>(model);
+        _deliveryCompanyRepository.Update(deliveryCompany);
         var result = await _unitOfWork.SaveChangesAsync();
         return result > 0 ? await GetDeliveryCompany(deliveryCompany.Id) : new BadRequestResult();
     }
