@@ -1,4 +1,6 @@
-﻿using Application.Services.Hangfire.Implementations;
+﻿using Application.Services.Authentication.Implementations;
+using Application.Services.Authentication.Interfaces;
+using Application.Services.Hangfire.Implementations;
 using Application.Services.Hangfire.Interfaces;
 using Application.Services.Implementations;
 using Application.Services.Interfaces;
@@ -14,6 +16,8 @@ public static class DependencyInjectionConfiguration
     {
         services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IHangfireService, HangfireService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IDeliveryCompanyService, DeliveryCompanyService>();
+        services.AddScoped<IBatchService, BatchService>();
     }
 }

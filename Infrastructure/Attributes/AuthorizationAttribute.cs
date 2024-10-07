@@ -15,14 +15,9 @@ namespace Infrastructure.Attributes
             Roles = roles.Select(x => x.ToLower()).ToList();
         }
 
-        public AuthorizeAttribute(ICollection<string> roles)
-        {
-            Roles = roles;
-        }
-
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var auth = (UserContextModel?)context.HttpContext.Items["USER"];
+            var auth = (UserInformationModel?)context.HttpContext.Items["USER"];
             if (auth == null)
             {
                 context.Result = HttpResponse.Unauthorized(AppMessages.Unauthorized);

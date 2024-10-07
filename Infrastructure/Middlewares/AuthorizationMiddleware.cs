@@ -1,4 +1,6 @@
-﻿using Application.Settings;
+﻿using Application.Services.Authentication.Interfaces;
+using Application.Settings;
+using Common.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -15,23 +17,23 @@ public class AuthorizationMiddleware
         _appSettings = appSettings.Value;
     }
 
-    // public async Task Invoke(HttpContext context, IAuthenticationService authenticationService)
-    // {
-    //     var token = context.Request.Headers["AuthenticationModel"].FirstOrDefault()?.Split(" ").Last();
-    //     if (token != null)
-    //     {
-    //         await AttachUserToContext(context, authenticationService, token);
-    //     }
-    //     await _next(context);
-    // }
-    //
-    // private async Task AttachUserToContext(HttpContext context, IAuthenticationService authenticationService, string token)
-    // {
-    //     var securityToken = JwtHelper.ValidateJwtToken(token, _appSettings.Secret);
-    //     var userId = Guid.Parse(securityToken.Claims.First(x => x.Type == "id").Value);
-    //     // Get user information
-    //     var user = await authenticationService.GetUserInfoAsync(userId);
-    //     // Push the user into context
-    //     context.Items["USER"] = user;
-    // }
+    public async Task Invoke(HttpContext context, IAuthenticationService authenticationService)
+    {
+        var token = context.Request.Headers["AuthenticationModel"].FirstOrDefault()?.Split(" ").Last();
+        if (token != null)
+        {
+            await AttachUserToContext(context, authenticationService, token);
+        }
+        await _next(context);
+    }
+    
+    private async Task AttachUserToContext(HttpContext context, IAuthenticationService authenticationService, string token)
+    {
+        var securityToken = JwtHelper.ValidateJwtToken(token, _appSettings.Secret);
+        var userId = Guid.Parse(securityToken.Claims.First(x => x.Type == "id").Value);
+        // Get user information
+        var user = await authenticationService.GetUser(userId);
+        // Push the user into context
+        context.Items["USER"] = user;
+    }
 }
