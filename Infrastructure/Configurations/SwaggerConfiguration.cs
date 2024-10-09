@@ -17,7 +17,7 @@ public static class SwaggerConfiguration
             {
                 Description =
                     "JWT AuthenticationModel header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.",
-                Name = "AuthenticationModel",
+                Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer"

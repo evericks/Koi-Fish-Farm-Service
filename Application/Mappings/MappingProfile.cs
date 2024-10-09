@@ -14,6 +14,7 @@ public class MappingProfile: Profile
     {
         CreateMap<User, UserInformationModel>();
         CreateMap<User, UserViewModel>();
+        CreateMap<UserUpdateModel, User>();
         
         CreateMap<Role, RoleViewModel>();
         CreateMap<RoleCreateModel, Role>()
@@ -31,8 +32,19 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
         CreateMap<BatchUpdateModel, Batch>();
         
+        CreateMap<Fish, FishViewModel>();
         CreateMap<FishCreateModel, Fish>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => DeliveryCompanyStatuses.Active));;
+            .ForMember(dest => dest.FishCategories, opt => opt.Ignore())
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => FishStatuses.Active));;
+        CreateMap<FishUpdateModel, Fish>();
+        
+        CreateMap<FishCategoryCreateModel, FishCategory>()
+            .ForMember(dest => dest.FishId, opt => opt.Ignore())
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
+
+        CreateMap<FishCategory, FishCategoryViewModel>();
+        
+        CreateMap<Category, CategoryViewModel>();
     }
 }

@@ -17,7 +17,10 @@ public static class DependencyInjectionConfiguration
         services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IHangfireService, HangfireService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IDeliveryCompanyService, DeliveryCompanyService>();
         services.AddScoped<IBatchService, BatchService>();
+        services.AddScoped<IFishService, FishService>();
     }
 }

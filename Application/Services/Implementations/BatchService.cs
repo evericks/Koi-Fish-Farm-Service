@@ -7,7 +7,6 @@ using Domain.Entities;
 using Domain.Models.Creates;
 using Domain.Models.Update;
 using Domain.Models.Views;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,7 +36,6 @@ public class BatchService : BaseService, IBatchService
         return new OkObjectResult(batch);
     }
 
-    [Authorize]
     public async Task<IActionResult> CreateBatch(Guid creatorId, BatchCreateModel model)
     {
         var batch = _mapper.Map<Batch>(model);

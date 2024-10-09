@@ -1,8 +1,8 @@
 ﻿namespace Domain.Validators;
 
-// public class StudentCreateValidator: AbstractValidator<StudentCreateModel>
+// public class FishCreateValidator: AbstractValidator<FishCreateModel>
 // {
-//     public StudentCreateValidator()
+//     public FishCreateValidator()
 //     {
 //         RuleFor(x => x.Email).EmailAddress().WithMessage("Email is invalid.");
 //     }

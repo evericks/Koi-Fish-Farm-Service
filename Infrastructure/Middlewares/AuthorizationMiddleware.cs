@@ -19,7 +19,7 @@ public class AuthorizationMiddleware
 
     public async Task Invoke(HttpContext context, IAuthenticationService authenticationService)
     {
-        var token = context.Request.Headers["AuthenticationModel"].FirstOrDefault()?.Split(" ").Last();
+        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
         if (token != null)
         {
             await AttachUserToContext(context, authenticationService, token);

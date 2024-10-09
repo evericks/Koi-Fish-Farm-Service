@@ -1,4 +1,6 @@
-﻿namespace Domain.Models.Update;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Domain.Models.Update;
 
 public class BatchUpdateModel
 {
@@ -6,7 +8,7 @@ public class BatchUpdateModel
 
     public string Name { get; set; } = null!;
 
-    public string ThumbnailUrl { get; set; } = null!;
+    public IFormFile? Thumbnail { get; set; } = null!;
 
     public int Price { get; set; }
 

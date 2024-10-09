@@ -45,7 +45,7 @@ public class BatchController : Controller
     // PUT
     [HttpPut]
     [Route("{id}")]
-    public async Task<IActionResult> UpdateBatch([FromRoute] Guid id, [FromBody] BatchUpdateModel model)
+    public async Task<IActionResult> UpdateBatch([FromRoute] Guid id, [FromForm] BatchUpdateModel model)
     {
         return await _batchService.UpdateBatch(id, model);
     }
