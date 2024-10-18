@@ -1,4 +1,5 @@
-﻿using Application.Services.Interfaces;
+﻿using Application.Services.Evercloud.Services.Interfaces;
+using Application.Services.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Data.EntityRepositories.Interfaces;
@@ -15,11 +16,13 @@ namespace Application.Services.Implementations;
 public class FishService : BaseService, IFishService
 {
     private readonly IFishRepository _fishRepository;
+    private readonly IEvercloudService _cloudService;
     private readonly IFishCategoryRepository _fishCategoryRepository;
 
-    public FishService(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+    public FishService(IUnitOfWork unitOfWork, IMapper mapper, IEvercloudService cloudService) : base(unitOfWork, mapper)
     {
         _fishRepository = unitOfWork.Fish;
+        _cloudService = cloudService;
         _fishCategoryRepository = unitOfWork.FishCategory;
     }
 
@@ -42,7 +45,7 @@ public class FishService : BaseService, IFishService
     {
         var fish = _mapper.Map<Fish>(model);
         fish.CreatorId = creatorId;
-        fish.ThumbnailUrl = "";
+        fish.ThumbnailUrl = await _cloudService.UploadAsync(model.Thumbnail, "Images") ?? "";
         _fishRepository.Add(fish);
         
         var result = await _unitOfWork.SaveChangesAsync();
