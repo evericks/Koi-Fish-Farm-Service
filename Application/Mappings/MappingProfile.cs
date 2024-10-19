@@ -39,12 +39,22 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => FishStatuses.Active));;
         CreateMap<FishUpdateModel, Fish>();
         
+        CreateMap<Category, CategoryViewModel>();
+        CreateMap<CategoryCreateModel, Category>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+        CreateMap<CategoryUpdateModel, Category>();
+        
+        CreateMap<Driver, DriverViewModel>();
+        CreateMap<DriverCreateModel, Driver>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => DriverStatuses.Active));
+        CreateMap<DriverUpdateModel, Driver>();
+        
         CreateMap<FishCategoryCreateModel, FishCategory>()
             .ForMember(dest => dest.FishId, opt => opt.Ignore())
             .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
 
         CreateMap<FishCategory, FishCategoryViewModel>();
         
-        CreateMap<Category, CategoryViewModel>();
     }
 }

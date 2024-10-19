@@ -68,6 +68,10 @@ public class FishService : BaseService, IFishService
     public async Task<IActionResult> UpdateFish(Guid id, FishUpdateModel model)
     {
         var fish = _mapper.Map<Fish>(model);
+        if (model.Thumbnail != null)
+        {
+            fish.ThumbnailUrl = await _cloudService.UploadAsync(model.Thumbnail, "Images") ?? "";
+        }
         _fishRepository.Update(fish);
         var result = await _unitOfWork.SaveChangesAsync();
         return result > 0 ? await GetFish(fish.Id) : new BadRequestResult();

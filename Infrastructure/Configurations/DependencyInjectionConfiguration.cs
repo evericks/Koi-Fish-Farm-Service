@@ -25,5 +25,7 @@ public static class DependencyInjectionConfiguration
         services.AddScoped<IDeliveryCompanyService, DeliveryCompanyService>();
         services.AddScoped<IBatchService, BatchService>();
         services.AddScoped<IFishService, FishService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IDriverService, DriverService>();
     }
 }
