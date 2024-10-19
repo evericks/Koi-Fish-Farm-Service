@@ -50,11 +50,20 @@ public class MappingProfile: Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => DriverStatuses.Active));
         CreateMap<DriverUpdateModel, Driver>();
         
+        CreateMap<Feedback, FeedbackViewModel>();
+        CreateMap<FeedbackCreateModel, Feedback>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()));
+        CreateMap<FeedbackUpdateModel, Feedback>();
+        
         CreateMap<FishCategoryCreateModel, FishCategory>()
             .ForMember(dest => dest.FishId, opt => opt.Ignore())
             .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId));
 
         CreateMap<FishCategory, FishCategoryViewModel>();
         
+        CreateMap<Order, OrderViewModel>();
+
+        CreateMap<OrderDetail, OrderDetailViewModel>();
+
     }
 }
